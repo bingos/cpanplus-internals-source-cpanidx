@@ -9,13 +9,11 @@ use CPANPLUS::Error;
 use CPANPLUS::Internals::Constants;
 use CPANPLUS::Internals::Source::CPANIDX::Tie;
 
-use Data::Dumper;
-
 use Params::Check               qw[allow check];
 use Locale::Maketext::Simple    Class => 'CPANPLUS', Style => 'gettext';
 
 use constant TXN_COMMIT => 1000;
-use constant CPANIDX => 'http://cpanidx.bingosnet.co.uk/cpandb/';
+use constant CPANIDX => 'http://cpanidx.bingosnet.co.uk/cpanidx/';
 
 =head1 NAME 
 
@@ -94,7 +92,6 @@ CPANPLUS::Internals::Source::CPANIDX - CPANIDX implementation
         *$sub = sub {
             my $self = shift;
             my %hash = @_;
-            my $dbh  = $self->__sqlite_dbh;
             
             my($list,$type);
             my $tmpl = {
@@ -106,15 +103,15 @@ CPANPLUS::Internals::Source::CPANIDX - CPANIDX implementation
         
             check( $tmpl, \%hash ) or return;
         
-        
+            my @rv;
             ### we aliased 'module' to 'name', so change that here too
-            $type = 'module' if $type eq 'name';
+            #$type = 'module' if $type eq 'name';
         
-            my $res = $dbh->query( "SELECT * from $table" );
+            #my $res = $dbh->query( "SELECT * from $table" );
             
-            my $meth = $table .'_tree';
-            my @rv = map  { $self->$meth( $_->{$key} ) } 
-                     grep { allow( $_->{$type} => $list ) } $res->hashes;
+            #my $meth = $table .'_tree';
+            #my @rv = map  { $self->$meth( $_->{$key} ) } 
+            #         grep { allow( $_->{$type} => $list ) } $res->hashes;
         
             return @rv;
         }
