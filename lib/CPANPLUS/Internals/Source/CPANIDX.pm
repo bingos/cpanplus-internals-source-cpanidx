@@ -15,11 +15,9 @@ use Locale::Maketext::Simple    Class => 'CPANPLUS', Style => 'gettext';
 use constant TXN_COMMIT => 1000;
 use constant CPANIDX => 'http://cpanidx.bingosnet.co.uk/cpanidx/';
 
-=head1 NAME 
+use vars qw($VERSION);
 
-CPANPLUS::Internals::Source::CPANIDX - CPANIDX implementation
-
-=cut
+$VERSION = '0.01_01';
 
 {
     sub _init_trees {
@@ -77,6 +75,7 @@ CPANPLUS::Internals::Source::CPANIDX - CPANIDX implementation
     sub _add_module_object {
         return 1;
     }
+}
 
 {   my %map = (
         _source_search_module_tree  
@@ -119,3 +118,23 @@ CPANPLUS::Internals::Source::CPANIDX - CPANIDX implementation
 }
 
 1;
+
+__END__
+
+=head1 NAME 
+
+CPANPLUS::Internals::Source::CPANIDX - CPANIDX source implementation
+
+=head1 SYNOPSIS
+
+  # In the CPANPLUS shell
+
+  CPAN Terminal> s conf no_update 1
+  CPAN Terminal> s conf source_engine CPANPLUS::Internals::Source::CPANIDX
+  CPAN Terminal> s save
+
+=head1 DESCRIPTION
+
+CPANPLUS::Internals::Source::CPANIDX is a L<CPANPLUS> source implementation.
+
+

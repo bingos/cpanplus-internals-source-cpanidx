@@ -17,12 +17,11 @@ use Locale::Maketext::Simple    Class => 'CPANPLUS', Style => 'gettext';
 use File::Fetch;
 use Parse::CPAN::Meta;
 
-use Data::Dumper;
-$Data::Dumper::Indent = 1;
-
 require Tie::Hash;
-use vars qw[@ISA];
+use vars qw[@ISA $VERSION];
 push @ISA, 'Tie::StdHash';
+
+$VERSION = '0.01_01';
 
 sub TIEHASH {
     my $class = shift;
@@ -41,41 +40,6 @@ sub TIEHASH {
 
     return $obj;
 }    
-
-=for comment
-
-        CREATE TABLE author (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-
-            author  varchar(255),
-            email   varchar(255),
-            cpanid  varchar(255)
-
-  cpan_id: BINGOS
-  email: chris@bingosnet.co.uk
-  fullname: 'Chris Williams'
-
-        CREATE TABLE module (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-
-            module      varchar(255),
-            version     varchar(255),
-            path        varchar(255),
-            comment     varchar(255),
-            author      varchar(255),
-            package     varchar(255),
-            description varchar(255),
-            dslip       varchar(255),
-            mtime       varchar(255)
-
-  cpan_id: RCAPUTO
-  dist_file: R/RC/RCAPUTO/POE-1.287.tar.gz
-  dist_name: POE
-  dist_vers: 1.287
-  mod_name: POE
-  mod_vers: 1.287
-
-=cut
 
 sub FETCH {
     my $self    = shift;
@@ -193,11 +157,10 @@ sub NEXTKEY {
     return $key;
 }
 
-1;
-
 sub EXISTS   { !!$_[0]->FETCH( $_[1] ) }
 
 ### intentionally left blank
 sub DELETE   {  }
 sub CLEAR    {  }
 
+1;
