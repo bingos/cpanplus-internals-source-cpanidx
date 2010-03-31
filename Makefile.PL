@@ -7,7 +7,7 @@ version_from 'lib/CPANPLUS/Internals/Source/CPANIDX.pm';
 abstract_from 'lib/CPANPLUS/Internals/Source/CPANIDX.pm';
 readme_from 'lib/CPANPLUS/Internals/Source/CPANIDX.pm';
 license 'perl';
-auto_license holder => 'Chris Williams and Jos Boumans';
+auto_license holder => 'Chris Williams, Jos Boumans, Roy Hooper and Adam Kennedy';
 perl_version '5.006';
 build_requires 'Test::More' => 0.47;
 requires 'CPANPLUS' => '0.9001';

@@ -14,14 +14,14 @@ use Params::Check               qw[check];
 use Module::Load::Conditional   qw[can_load];
 use Locale::Maketext::Simple    Class => 'CPANPLUS', Style => 'gettext';
 
-use File::Fetch;
+use CPANPLUS::Internals::Source::CPANIDX::HTTP;
 use Parse::CPAN::Meta;
 
 require Tie::Hash;
 use vars qw[@ISA $VERSION];
 push @ISA, 'Tie::StdHash';
 
-$VERSION = '0.01_01';
+$VERSION = '0.01_04';
 
 sub TIEHASH {
     my $class = shift;
@@ -55,11 +55,14 @@ sub FETCH {
         return $obj;
     }
     
-    my $ff = File::Fetch->new( uri => $self->{idx} . "yaml/$lkup/" . $key );
-    return unless $ff;
-
+    my $url = $self->{idx} . "yaml/$lkup/" . $key;
     my $str;
-    return unless $ff->fetch( to => \$str );
+
+    my $http = CPANPLUS::Internals::Source::CPANIDX::HTTP->new();
+
+    my $status = $http->request( $url ) or return;
+    return unless $status eq '200';
+    return unless $str = $http->body;
 
     my $res;
     eval { $res = Parse::CPAN::Meta::Load( $str ); };
@@ -120,12 +123,15 @@ sub FIRSTKEY {
     my $table   = $self->{table};
 
     my $lkup = $table eq 'module' ? 'mod' : 'auth';
-
-    my $ff = File::Fetch->new( uri => $idx . "yaml/${lkup}keys" );
-    return unless $ff;
+    my $url = $idx . "yaml/${lkup}keys";
 
     my $str;
-    return unless $ff->fetch( to => \$str );
+
+    my $http = CPANPLUS::Internals::Source::CPANIDX::HTTP->new();
+
+    my $status = $http->request( $url ) or return;
+    return unless $status eq '200';
+    return unless $str = $http->body;
 
     my $res;
     eval { $res = Parse::CPAN::Meta::Load( $str ); };

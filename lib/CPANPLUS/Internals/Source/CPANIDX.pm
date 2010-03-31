@@ -11,13 +11,13 @@ use CPANPLUS::Internals::Source::CPANIDX::Tie;
 
 use Params::Check               qw[allow check];
 use Locale::Maketext::Simple    Class => 'CPANPLUS', Style => 'gettext';
+use Module::Load::Conditional   qw[check_install];
 
-use constant TXN_COMMIT => 1000;
-use constant CPANIDX => 'http://cpanidx.bingosnet.co.uk/cpanidx/';
+use constant CPANIDX => 'http://cpanidx.org/cpanidx/';
 
 use vars qw($VERSION);
 
-$VERSION = '0.01_01';
+$VERSION = '0.01_04';
 
 {
     sub _init_trees {
@@ -69,12 +69,55 @@ $VERSION = '0.01_01';
     }
 
     sub _add_author_object {
-        return 1;
-     }
+      my $self = shift;
+      my %hash = @_;
+      return 1;
 
-    sub _add_module_object {
-        return 1;
-    }
+      my $class;
+      my $tmpl = {
+        class   => { default => 'CPANPLUS::Module::Author', store => \$class },
+        map { $_ => { required => 1 } } 
+            qw[ author cpanid email ]
+      };
+
+      my $href = do {
+        local $Params::Check::NO_DUPLICATES = 1;
+        check( $tmpl, \%hash ) or return;
+      };
+    
+      my $obj = $class->new( %$href, _id => $self->_id );
+    
+      $self->author_tree->{ $href->{'cpanid'} } = $obj or return;
+
+      return $obj;
+    } 
+
+  sub _add_module_object {
+    my $self = shift;
+    my %hash = @_;
+
+    my $class;
+    my $tmpl = {
+        class   => { default => 'CPANPLUS::Module', store => \$class },
+        map { $_ => { required => 1 } } 
+            qw[ module version path comment author package description dslip mtime ]
+    };
+
+    my $href = do {
+        local $Params::Check::NO_DUPLICATES = 1;
+        check( $tmpl, \%hash ) or return;
+    };
+
+    return unless check_install( module => $href->{module} );
+    
+    my $obj = $class->new( %$href, _id => $self->_id );
+    
+    ### Every module get's stored as a module object ###
+    $self->module_tree->{ $href->{module} } = $obj or return;
+
+    return $obj;    
+  }
+
 }
 
 {   my %map = (
@@ -137,4 +180,4 @@ CPANPLUS::Internals::Source::CPANIDX - CPANIDX source implementation
 
 CPANPLUS::Internals::Source::CPANIDX is a L<CPANPLUS> source implementation.
 
-
+=cut
