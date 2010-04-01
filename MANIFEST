@@ -1,4 +1,6 @@
 Changes
+examples/installer.pl
+examples/updater.pl
 inc/Module/Install.pm
 inc/Module/Install/AutoLicense.pm
 inc/Module/Install/Base.pm
