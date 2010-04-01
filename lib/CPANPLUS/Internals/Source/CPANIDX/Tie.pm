@@ -21,7 +21,7 @@ require Tie::Hash;
 use vars qw[@ISA $VERSION];
 push @ISA, 'Tie::StdHash';
 
-$VERSION = '0.01_04';
+$VERSION = '0.01_05';
 
 sub TIEHASH {
     my $class = shift;

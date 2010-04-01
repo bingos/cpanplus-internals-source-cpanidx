@@ -17,9 +17,11 @@ use constant CPANIDX => 'http://cpanidx.org/cpanidx/';
 
 use vars qw($VERSION);
 
-$VERSION = '0.01_04';
+$VERSION = '0.01_05';
 
 {
+    my $cpanidx = $ENV{PERL5_CPANIDX_URL} || CPANIDX;
+
     sub _init_trees {
         my $self = shift;
         my $conf = $self->configure_object;
@@ -38,7 +40,7 @@ $VERSION = '0.01_04';
         ### set up the author tree
         {   my %at;
             tie %at, 'CPANPLUS::Internals::Source::CPANIDX::Tie',
-                idx => CPANIDX, table => 'author', 
+                idx => $cpanidx, table => 'author', 
                 key => 'cpanid',            cb => $self;
                 
             $self->_atree( \%at  );
@@ -47,7 +49,7 @@ $VERSION = '0.01_04';
         ### set up the author tree
         {   my %mt;
             tie %mt, 'CPANPLUS::Internals::Source::CPANIDX::Tie',
-                idx => CPANIDX, table => 'module', 
+                idx => $cpanidx, table => 'module', 
                 key => 'module',            cb => $self;
 
             $self->_mtree( \%mt  );
