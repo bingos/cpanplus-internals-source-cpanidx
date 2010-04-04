@@ -66,6 +66,8 @@ $VERSION = '0.01_05';
 
     ### no saving state in cpanidx
     sub _save_state                 { return }
+    sub __check_uptodate            { return 1 }
+    sub _check_trees                { return 1 }
 
     sub _add_author_object {
       my $self = shift;
