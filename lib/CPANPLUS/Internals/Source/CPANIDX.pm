@@ -46,7 +46,7 @@ $VERSION = '0.01_05';
             $self->_atree( \%at  );
         }
 
-        ### set up the author tree
+        ### set up the module tree
         {   my %mt;
             tie %mt, 'CPANPLUS::Internals::Source::CPANIDX::Tie',
                 idx => $cpanidx, table => 'module', 
