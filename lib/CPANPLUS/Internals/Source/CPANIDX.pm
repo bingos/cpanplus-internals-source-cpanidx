@@ -58,17 +58,14 @@ $VERSION = '0.01_05';
         return 1;        
         
     }
-    
+
     sub _standard_trees_completed   { return 1 }
     sub _custom_trees_completed     { return }
     ### finish transaction
     sub _finalize_trees             { return 1 }
 
-    ### saves current memory state, but not implemented in sqlite
-    sub _save_state                 { 
-        error(loc("%1 has not implemented writing state to disk", __PACKAGE__)); 
-        return;
-    }
+    ### no saving state in cpanidx
+    sub _save_state                 { return }
 
     sub _add_author_object {
       my $self = shift;
