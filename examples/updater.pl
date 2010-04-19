@@ -9,6 +9,7 @@ use File::Fetch;
 use IO::Zlib;
 use version;
 use Module::Load::Conditional qw[check_install];
+use CPANPLUS::Internals::Constants;
 use CPANPLUS::Backend;
 
 $ENV{PERL_MM_USE_DEFAULT} = 1; # despite verbose setting
