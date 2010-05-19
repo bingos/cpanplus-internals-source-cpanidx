@@ -17,7 +17,7 @@ use constant CPANIDX => 'http://cpanidx.org/cpanidx/';
 
 use vars qw($VERSION);
 
-$VERSION = '0.01_05';
+$VERSION = '0.02';
 
 {
     my $cpanidx = $ENV{PERL5_CPANIDX_URL} || CPANIDX;
