@@ -181,4 +181,53 @@ CPANPLUS::Internals::Source::CPANIDX - CPANIDX source implementation
 
 CPANPLUS::Internals::Source::CPANIDX is a L<CPANPLUS> source implementation.
 
+It is highly experimental.
+
+Usually L<CPANPLUS> retrieves the CPAN index files, extracts them and builds
+an in-memory index of every module listed on CPAN. As you can imagine, this is
+quite memory intensive.
+
+This source implementation does things slightly different.
+
+Instead of building an in-memory index, it queries an L<App::CPANIDX> based
+website for module/distribution/author information as and when it is required
+by L<CPANPLUS>.
+
+The default CPANIDX site is L<http://cpanidx.org/cpanidx/>.
+
+You may set the C<PERL5_CPANIDX_URL> environment variable to an alternative if you wish.
+
+=head1 CAVEATS
+
+There are some caveats.
+
+As shown in the L</SYNOPSIS> you must set the L<CPANPLUS> configuration variable
+C<no_update> to a true value to use this source engine. This prevents L<CPANPLUS> from
+attempting to update CPAN indexes.
+
+Attempting to searches and getting a list of out of date modules in L<CPANPLUS> are
+incredibly slow due the million or so web accesses that are incurred.
+
+I have included two scripts in the C<examples> directory of this distribution that
+may be of use. C<installer.pl> does installation of modules and C<updater.pl> will
+find out of date modules and prompt to update them.
+
+=head1 AUTHOR
+
+Chris C<BinGOs> Williams <chris@bingosnet.co.uk>
+
+Jos Boumans <kane@cpan.org>
+
+=head1 LICENSE
+
+Copyright E<copy> Chris Williams and Jos Boumans
+
+This module may be used, modified, and distributed under the same terms as Perl itself. Please see the license that came with your Perl distribution for details.
+
+=head1 SEE ALSO
+
+L<CPANPLUS>
+
+L<CPANPLUS::Internals::Source>
+
 =cut

@@ -17,7 +17,7 @@ requires 'Locale::Maketext::Simple' => 0;
 requires 'Module::Load::Conditional' => 0;
 requires 'File::Fetch' => 0;
 requires 'Parse::CPAN::Meta' => 0;
-#makemaker_args(dist => { PREOP => "$^X ./tools/git-log.pl > ./Changes" });
+makemaker_args(dist => { PREOP => "$^X ./tools/git-log.pl > ./Changes" });
 auto_provides;
 githubmeta;
 WriteAll();
