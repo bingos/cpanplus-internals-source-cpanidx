@@ -1,5 +1,7 @@
 package CPANPLUS::Internals::Source::CPANIDX::Tie;
 
+#ABSTRACT: A tie for the CPANIDX source engine
+
 use strict;
 use warnings;
 
@@ -18,10 +20,8 @@ use CPANPLUS::Internals::Source::CPANIDX::HTTP;
 use Parse::CPAN::Meta;
 
 require Tie::Hash;
-use vars qw[@ISA $VERSION];
+use vars qw[@ISA];
 push @ISA, 'Tie::StdHash';
-
-$VERSION = '0.02';
 
 sub TIEHASH {
     my $class = shift;
@@ -169,31 +169,15 @@ sub EXISTS   { !!$_[0]->FETCH( $_[1] ) }
 sub DELETE   {  }
 sub CLEAR    {  }
 
-qq[Tie your mother down]
+qq[Tie your mother down];
 
-__END__
-
-=head1 NAME
-
-CPANPLUS::Internals::Source::CPANIDX::Tie - A tie for the CPANIDX source engine
+=pod
 
 =head1 DESCRIPTION
 
 CPANPLUS::Internals::Source::CPANIDX::Tie is a tie for L<CPANPLUS::Internals::Source::CPANIDX>.
 
 It has no user serviceable parts.
-
-=head1 AUTHOR
-
-Chris C<BinGOs> Williams <chris@bingosnet.co.uk>
-
-Jos Boumans <kane@cpan.org>
-
-=head1 LICENSE
-
-Copyright E<copy> Chris Williams and Jos Boumans
-
-This module may be used, modified, and distributed under the same terms as Perl itself. Please see the license that came with your Perl distribution for details.
 
 =head1 SEE ALSO
 

@@ -1,15 +1,12 @@
 package CPANPLUS::Internals::Source::CPANIDX::HTTP;
 
+#ABSTRACT: Lightweight HTTP implementation
+
 use 5.005;
 use strict;
 use Socket 1.3;
 use Fcntl;
 use Errno qw(EAGAIN);
-
-use vars qw($VERSION);
-BEGIN {
-	$VERSION = "0.02";
-}
 
 my $BLOCKSIZE = 65536;
 my $CRLF = "\r\n";
@@ -107,7 +104,7 @@ sub reset
   }
   $self->{HTTPReadBuffer} = "";
   $self->{method} = "GET";
-  $self->{headers} = { 'user-agent' => "HTTP::Lite/$VERSION" };
+  $self->{headers} = { 'user-agent' => "HTTP::Lite/$CPANPLUS::Internals::Source::CPANMetaDB::HTTP::VERSION" };
   $self->{headermap} = { 'user-agent'  => 'User-Agent' };
 }
 
@@ -755,13 +752,23 @@ sub upper
 
 1;
 
-__END__
-
 =pod
 
-=head1 NAME
+=begin Pod::Coverage
 
-HTTP::Lite - Lightweight HTTP implementation
+       DEBUG
+       add_to_body
+       enum_req_headers
+       escape
+       header_at_once
+       http_read
+       http_readbytes
+       http_readline
+       http_write
+       initialize
+       upper
+
+=end Pod::Coverage
 
 =head1 SYNOPSIS
 
@@ -1035,7 +1042,7 @@ setting.  Usual choices are GET, POST, PUT, HEAD
     when transferring files.  HTTP/1.1 mode is now disabled by
     default.
 
-=head1 AUTHOR
+=head1 AUTHORS
 
 Roy Hooper <rhooper@thetoybox.org>
 
@@ -1044,7 +1051,7 @@ Roy Hooper <rhooper@thetoybox.org>
 L<LWP>
 RFC 2068 - HTTP/1.1 -http://www.w3.org/
 
-=head1 COPYRIGHT
+=head1 COPYRIGHT AND LICENSE
 
 Copyright (c) 2000-2002 Roy Hooper.  All rights reserved.
 

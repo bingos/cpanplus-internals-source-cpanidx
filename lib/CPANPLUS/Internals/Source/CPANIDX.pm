@@ -1,5 +1,7 @@
 package CPANPLUS::Internals::Source::CPANIDX;
 
+#ABSTRACT: CPANIDX source implementation
+
 use strict;
 use warnings;
 
@@ -14,10 +16,6 @@ use Locale::Maketext::Simple    Class => 'CPANPLUS', Style => 'gettext';
 use Module::Load::Conditional   qw[check_install];
 
 use constant CPANIDX => 'http://cpanidx.org/cpanidx/';
-
-use vars qw($VERSION);
-
-$VERSION = '0.02';
 
 {
     my $cpanidx = $ENV{PERL5_CPANIDX_URL} || CPANIDX;
@@ -163,11 +161,7 @@ $VERSION = '0.02';
 
 1;
 
-__END__
-
-=head1 NAME 
-
-CPANPLUS::Internals::Source::CPANIDX - CPANIDX source implementation
+=pod
 
 =head1 SYNOPSIS
 
@@ -211,18 +205,6 @@ incredibly slow due the million or so web accesses that are incurred.
 I have included two scripts in the C<examples> directory of this distribution that
 may be of use. C<installer.pl> does installation of modules and C<updater.pl> will
 find out of date modules and prompt to update them.
-
-=head1 AUTHOR
-
-Chris C<BinGOs> Williams <chris@bingosnet.co.uk>
-
-Jos Boumans <kane@cpan.org>
-
-=head1 LICENSE
-
-Copyright E<copy> Chris Williams and Jos Boumans
-
-This module may be used, modified, and distributed under the same terms as Perl itself. Please see the license that came with your Perl distribution for details.
 
 =head1 SEE ALSO
 
